@@ -159,3 +159,41 @@ def tracer_variations(comparaison_films):
     plt.show()
 
 
+
+def preparer_regression(comparaison_films, minimum_films_genre=30):
+    """Ajouter les variables explicatives sans dupliquer les lignes par genre."""
+    # Cette copie porte seulement sur la petite table par film.
+    df_reg = comparaison_films.copy()
+    # Le logarithme réduit les écarts d'échelle entre les volumes initiaux de notes.
+    df_reg["log_nb_notes_debut"] = np.log1p(df_reg["nb_notes_debut"])
+    # Les deux périodes durent cinq ans. Les effectifs sont positifs grâce au filtre
+    # du notebook, ce qui permet de prendre le logarithme de leur rapport.
+    df_reg["evolution_attention"] = np.log(
+        df_reg["nb_notes_tardif"] / df_reg["nb_notes_intermediaire"]
+    )
+    # Une colonne 0/1 par genre garde une seule ligne par film, même si les genres se cumulent.
+    genres = df_reg["genres"].fillna("").str.get_dummies(sep="|")
+    # On retire l'absence de genre renseigné et les genres trop rares dans cet échantillon.
+    genres = genres.drop(columns="(no genres listed)", errors="ignore")
+    genres = genres.loc[:, genres.sum() >= minimum_films_genre]
+    # Les noms sans tirets sont utilisables dans les formules de régression.
+    genres.columns = ["genre_" + nom.replace("-", "_") for nom in genres.columns]
+    # La liste des colonnes sert à écrire la formule des modèles dans le notebook.
+    return df_reg.join(genres), list(genres.columns)
+
+
+def comparer_modeles(modeles):
+    """Comparer l'ajustement de modèles estimés sur les mêmes films."""
+    # La comparaison suppose que les modèles sont estimés sur le même ensemble de films.
+    lignes = []
+    # Le R² ajusté tient compte du nombre de variables. Le RMSE est en points de note.
+    for nom, modele in modeles:
+        lignes.append({
+            "modele": nom,
+            "nombre_films": int(modele.nobs),
+            "R2": modele.rsquared,
+            "R2_ajuste": modele.rsquared_adj,
+            "RMSE": np.sqrt(np.mean(modele.resid ** 2)),
+        })
+    # Ces mesures décrivent l'ajustement sur les films utilisés pour l'estimation.
+    return pd.DataFrame(lignes)
