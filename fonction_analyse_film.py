@@ -132,3 +132,30 @@ def tracer_trajectoire(comparaison_films, periodes):
     plt.show()
     # On renvoie aussi le résumé des moyennes et des effectifs affiché dans le notebook.
     return resume.drop(columns="centre")
+
+
+
+def tracer_variations(comparaison_films):
+    """Montrer la diversité des variations initiales et des reprises."""
+    # À gauche, chaque point représente un film. Les axes à zéro séparent les profils.
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+    axes[0].scatter(
+        comparaison_films["variation_initiale"], comparaison_films["reprise"],
+        s=12, alpha=0.3,
+    )
+    axes[0].axhline(0, color="black", linestyle="--")
+    axes[0].axvline(0, color="black", linestyle="--")
+    axes[0].set_xlabel("Variation initiale B (points de note)")
+    axes[0].set_ylabel("Reprise R (points de note)")
+    axes[0].set_title("Diversité des trajectoires observées")
+    # À droite, on regarde la distribution de la variation tardive :
+    # une valeur positive correspond à une hausse, une valeur négative à une baisse.
+    axes[1].hist(comparaison_films["reprise"], bins=30, edgecolor="white", color="#7BAFD4")
+    axes[1].axvline(0, color="black", linestyle="--")
+    axes[1].set_xlabel("Reprise R (points de note)")
+    axes[1].set_ylabel("Nombre de films")
+    axes[1].set_title("Distribution de la reprise")
+    plt.tight_layout()
+    plt.show()
+
+
