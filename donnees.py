@@ -27,19 +27,18 @@ def extraire(nom_zip, dossier):
         archive.extractall(dossier)
 
 
-# TELECHARGEMENT ALMA PARCE QUE TOUT BUG ARGGGG
+# TELECHARGEMENT LOCAL EN CAS DE BUG (solution de secours)
 
 #DOSSIER_CSV = "ml-32m"
 
 # Si les CSV sont dans un sous-dossier, on le prend
-#if "movies.csv" not in os.listdir(DOSSIER_CSV):
-    #print("Contenu de ml_32m :", os.listdir(DOSSIER_CSV))
-#else:
-    #movies = pd.read_csv(os.path.join(DOSSIER_CSV, "movies.csv"))
-    #tags = pd.read_csv(os.path.join(DOSSIER_CSV, "tags.csv"))
-    #links = pd.read_csv(os.path.join(DOSSIER_CSV, "links.csv"))
-    #ratings = pd.read_csv(os.path.join(DOSSIER_CSV, "ratings.csv"))
 
-    #print(movies.head())
-    #print(ratings.shape)
+#import os
+#import pandas as pd
+#movies = pd.read_csv(os.path.join(DOSSIER_CSV, "movies.csv"))
+#tags = pd.read_csv(os.path.join(DOSSIER_CSV, "tags.csv"))
+#links = pd.read_csv(os.path.join(DOSSIER_CSV, "links.csv"))
+#ratings = pd.read_csv(os.path.join(DOSSIER_CSV, "ratings.csv"))
 
+#display(movies.head())
+#display(ratings.shape)
