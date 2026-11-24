@@ -2,7 +2,7 @@
 
 # Projet Python pour la Data Science
 
-*Auteurs : Alma El Karoui et Gabriel Courtadon — ENSAE Paris, 2026.*
+*Auteurs : Alma El Karoui et Gabriel Courtadon. ENSAE Paris, 2026.*
 
 ## Sujet : Comment note-t-on un film ?
 
@@ -29,8 +29,6 @@ Le notebook présente successivement :
 2. L’évolution des notes et de leur dispersion avec l’ancienneté des utilisateurs (**IV.A**), en comparant aussi les mêmes personnes.
 3. L’évolution des notes avec l’ancienneté des films (**IV.B**), puis les trajectoires d’une cohorte fixe.
 4. Trois régressions descriptives sur la variation tardive des notes, intégrant progressivement les caractéristiques des films, leur réception initiale et l’évolution du volume de notations.
-
-Les résultats sont interprétés comme des **associations**, sans établir de liens causaux.
 
 ## Reproduction du projet
 
